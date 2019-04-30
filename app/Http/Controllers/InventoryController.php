@@ -35,7 +35,12 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new Inventory();
+        $product->product_name = $request->name;
+        $product->supplier_id = $request->id;
+        $product->save();
+        return redirect()->back()->with('status', 'Added New Product to Inventory');   
+
     }
 
     /**

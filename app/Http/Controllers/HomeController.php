@@ -32,14 +32,16 @@ class HomeController extends Controller
                     ->select('users.name','inventories.product_name')
                     ->get();
         $user= Auth::user();
+        $supplier=User::where('role','supplier')->get();
         if($user->role==='supplier'){
             $products =  User::join('inventories', function ($join)use($user) {
             $join->on('users.id', '=', 'inventories.supplier_id')
-                 ->where('cinventories.supplier_id', '=', $user->id);
+                 ->where('inventories.supplier_id', '=', $user->id);
         })
-        ->get();   
+        ->get();  
+         return view('home',compact('products','supplier','user'));
         }
          
-        return view('home',compact('products'));
+        return view('home',compact('products','supplier','user'));
     }
 }
